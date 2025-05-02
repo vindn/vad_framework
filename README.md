@@ -1,83 +1,122 @@
 # VAD Framework
 
-VAD (Vessel Activity Detection) Framework é um projeto desenvolvido para detectar e analisar atividades suspeitas de embarcações usando técnicas de fusão de dados e aprendizado de máquina.
+VAD (Vessel Activity Detection) Framework is a project developed to detect and analyze suspicious vessel activities using data fusion techniques and machine learning.
 
-## Funcionalidades
+## Features
 
-- Detecção de atividades suspeitas de embarcações
-- Análise de trajetórias de navios
-- Identificação de padrões de pesca ilegal
-- Detecção de encontros entre embarcações
-- Análise de comportamentos de loitering
-- Detecção de atividades em áreas restritas
+- Detection of suspicious vessel activities
+- Analysis of ship trajectories
+- Identification of illegal fishing patterns
+- Detection of vessel encounters
+- Analysis of loitering behaviors
+- Detection of activities in restricted areas
 
-## Estrutura do Projeto
+## Project Structure
 
 ```
 .
-├── data/                  # Dados de entrada (shapefiles, datasets)
-├── docs/                  # Documentação e referências
-├── src/                   # Código fonte
-│   ├── behaviours/       # Módulos de detecção de comportamentos
-│   ├── database/         # Módulos de banco de dados
-│   ├── rules/            # Regras e zonas de restrição
-│   ├── tools/            # Ferramentas auxiliares
-│   └── ui_expert/        # Interface para especialistas
-├── templates/            # Templates HTML para visualização
-└── requirements.txt      # Dependências do projeto
+├── data/                  # Input data (shapefiles, datasets)
+├── docs/                  # Documentation and references
+├── src/                   # Source code
+│   ├── behaviours/       # Behavior detection modules
+│   ├── database/         # Database modules
+│   ├── rules/            # Rules and restriction zones
+│   ├── tools/            # Auxiliary tools
+│   └── ui_expert/        # Expert interface
+├── templates/            # HTML templates for visualization
+└── requirements.txt      # Project dependencies
 ```
 
-## Instalação
+## Installation
 
-1. Clone o repositório:
+1. Clone the repository:
 ```bash
 git clone git@github.com:vindn/vad_framework.git
 cd vad_framework
 ```
 
-2. Instale as dependências:
+2. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-## Uso
+## Usage
 
-O framework pode ser executado de diferentes formas:
+The framework can be executed in different ways:
 
-1. Processamento em lote:
+1. Batch processing:
 ```bash
 python main.py
 ```
 
-2. Processamento em streaming:
+2. Stream processing:
 ```bash
 python main_jdl_stream.py
 ```
 
-3. Interface para especialistas:
+3. Expert interfaces:
+
+   a. Cold Start Interface (Data Initialization):
+   ```bash
+   python ui_coldstart.py
+   ```
+   The Cold Start interface is used to initialize the system with initial data. It allows experts to:
+   - Load and preprocess vessel trajectory data
+   - Define initial behavior patterns
+   - Set up initial rules and thresholds
+   - Configure the metamodel database
+
+   b. Expert Operator Interface:
+   ```bash
+   python ui_op1.py
+   ```
+   The Expert Operator interface (Operator 1) is used to evaluate vessel trajectories. It provides:
+   - Visualization of vessel trajectories
+   - Tools for pattern analysis
+   - Behavior classification options
+   - Feedback collection for model improvement
+
+   c. Photo Classification Interface:
+   ```bash
+   python ui_expert/classifica_foto.py
+   ```
+
+## Large Files
+
+Some data files and models are too large to be stored on GitHub. These files are split into smaller parts using the `split_large_files.sh` script.
+
+### Extracting Large Files
+
+1. Download all parts of the compressed files (e.g., `file.zip.001`, `file.zip.002`, etc.)
+
+2. To extract the files:
 ```bash
-python ui_expert/classifica_foto.py
+# If using split zip files
+zip -s 0 file.zip.001 --out unsplit.zip
+unzip unsplit.zip
+
+# If using tar.gz parts
+cat file.tar.gz.part* > file.tar.gz
+tar xzf file.tar.gz
 ```
 
-## Arquivos Grandes
-
-Alguns arquivos de dados e modelos são muito grandes para serem armazenados no GitHub. Estes arquivos devem ser baixados separadamente e colocados nos diretórios apropriados:
+3. Place the extracted files in their respective directories:
 
 - `data/sintetic/gdf_sintetic.pkl`
 - `data/sintetic/list_encounters_3meses.pickle`
 - `data/sistram/gdf_*_*.pickle`
 - `metamodel.db`
 
-## Contribuição
+## Contributing
 
-Para contribuir com o projeto:
+To contribute to the project:
 
-1. Fork o repositório
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
-3. Commit suas mudanças (`git commit -am 'Adiciona nova feature'`)
-4. Push para a branch (`git push origin feature/nova-feature`)
-5. Crie um Pull Request
+1. Fork the repository
+2. Create a branch for your feature (`git checkout -b feature/new-feature`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature/new-feature`)
+5. Create a Pull Request
 
-## Licença
+## License
 
-Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+This project is under the MIT license. See the LICENSE file for details.
