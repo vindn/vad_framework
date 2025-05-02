@@ -55,6 +55,7 @@ python main_jdl_stream.py
 ```
 
 3. Expert interfaces:
+   The ui was developled using flask.
 
    a. Cold Start Interface (Data Initialization):
    ```bash
@@ -72,14 +73,10 @@ python main_jdl_stream.py
    ```
    The Expert Operator interface (Operator 1) is used to evaluate vessel trajectories. It provides:
    - Visualization of vessel trajectories
-   - Tools for pattern analysis
    - Behavior classification options
-   - Feedback collection for model improvement
 
-   c. Photo Classification Interface:
-   ```bash
-   python ui_expert/classifica_foto.py
-   ```
+
+
 
 ## Large Files
 
@@ -107,15 +104,6 @@ tar xzf file.tar.gz
 - `data/sistram/gdf_*_*.pickle`
 - `metamodel.db`
 
-## Contributing
-
-To contribute to the project:
-
-1. Fork the repository
-2. Create a branch for your feature (`git checkout -b feature/new-feature`)
-3. Commit your changes (`git commit -am 'Add new feature'`)
-4. Push to the branch (`git push origin feature/new-feature`)
-5. Create a Pull Request
 
 ## License
 

@@ -179,7 +179,7 @@ perf.calc_acc( )
 
 # TESTE
 import geopandas as gpd
-gdf_zee_brazil = gpd.read_file("/home/vindn/SynologyDrive/4_UFRJ/projeto_tese/codigos/vessel_activity_jdl/data/zee/EEZ_land_union_v3_202003/EEZ_Land_v3_202030.shp")
+gdf_zee_brazil = gpd.read_file("data/zee/EEZ_land_union_v3_202003/EEZ_Land_v3_202030.shp")
 # %%
 gdf_zee_brazil[ gdf_zee_brazil["UNION"] == "Brazil" ].plot()
 # %%
