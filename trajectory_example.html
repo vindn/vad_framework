@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_5d94b849aee2bc717d0a852b248d54da {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_5d94b849aee2bc717d0a852b248d54da" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_5d94b849aee2bc717d0a852b248d54da = L.map(
+                "map_5d94b849aee2bc717d0a852b248d54da",
+                {
+                    center: [-11.01, -36.12667],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 10,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_dc099d2022689199906158616b68bb9c = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_dc099d2022689199906158616b68bb9c.addTo(map_5d94b849aee2bc717d0a852b248d54da);
+        
+    
+            var circle_marker_d8da1b651f8c78403efdcc47fa2da3c8 = L.circleMarker(
+                [-11.01, -36.12667],
+                {"bubblingMouseEvents": true, "color": "#3388ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#3388ff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1, "stroke": true, "weight": 3}
+            ).addTo(map_5d94b849aee2bc717d0a852b248d54da);
+        
+    
+        var popup_23e602c84a600e1a264f45d252ee3af7 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_a7dec208001ba8352cd8d1367cb9082b = $(`<div id="html_a7dec208001ba8352cd8d1367cb9082b" style="width: 100.0%; height: 100.0%;"><b>Timestamp:</b> 2019-12-15 23:09:46<br><b>VesselName:</b> CBO PARINTINS<br><b>MMSI</b>: 710002624<br><b>LAT:</b> -11.01<br><b>LON:</b> -36.12667<br><b>SOG:</b> 0.0<br><b>Type:</b> Cargo<br><b>COG:</b> 299.0<br></div>`)[0];
+                popup_23e602c84a600e1a264f45d252ee3af7.setContent(html_a7dec208001ba8352cd8d1367cb9082b);
+            
+        
+
+        circle_marker_d8da1b651f8c78403efdcc47fa2da3c8.bindPopup(popup_23e602c84a600e1a264f45d252ee3af7)
+        ;
+
+        
+    
+    
+            var circle_marker_ac337d3bf76cef9cac5557ecae25d84a = L.circleMarker(
+                [-10.9932, -36.1296183],
+                {"bubblingMouseEvents": true, "color": "#3388ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#3388ff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1, "stroke": true, "weight": 3}
+            ).addTo(map_5d94b849aee2bc717d0a852b248d54da);
+        
+    
+        var popup_12501f73fc4d4792322ada5e142cdee8 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_32ce187169e02f28ca3199f050dd0efe = $(`<div id="html_32ce187169e02f28ca3199f050dd0efe" style="width: 100.0%; height: 100.0%;"><b>Timestamp:</b> 2019-12-16 00:37:35<br><b>VesselName:</b> CBO PARINTINS<br><b>MMSI</b>: 710002624<br><b>LAT:</b> -10.9932<br><b>LON:</b> -36.1296183<br><b>SOG:</b> 0.0<br><b>Type:</b> Cargo<br><b>COG:</b> 299.0<br></div>`)[0];
+                popup_12501f73fc4d4792322ada5e142cdee8.setContent(html_32ce187169e02f28ca3199f050dd0efe);
+            
+        
+
+        circle_marker_ac337d3bf76cef9cac5557ecae25d84a.bindPopup(popup_12501f73fc4d4792322ada5e142cdee8)
+        ;
+
+        
+    
+    
+            var circle_marker_4bfdedcbaa527a2153977c3021ff2eed = L.circleMarker(
+                [-10.8409483, -36.086805],
+                {"bubblingMouseEvents": true, "color": "#3388ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#3388ff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1, "stroke": true, "weight": 3}
+            ).addTo(map_5d94b849aee2bc717d0a852b248d54da);
+        
+    
+        var popup_59f856b3b781bd9b19fc07e0897d84e7 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_6c7b52ee95c0b4a9f12d97099a54564c = $(`<div id="html_6c7b52ee95c0b4a9f12d97099a54564c" style="width: 100.0%; height: 100.0%;"><b>Timestamp:</b> 2019-12-16 01:51:02<br><b>VesselName:</b> CBO PARINTINS<br><b>MMSI</b>: 710002624<br><b>LAT:</b> -10.8409483<br><b>LON:</b> -36.086805<br><b>SOG:</b> 0.0<br><b>Type:</b> Cargo<br><b>COG:</b> 299.0<br></div>`)[0];
+                popup_59f856b3b781bd9b19fc07e0897d84e7.setContent(html_6c7b52ee95c0b4a9f12d97099a54564c);
+            
+        
+
+        circle_marker_4bfdedcbaa527a2153977c3021ff2eed.bindPopup(popup_59f856b3b781bd9b19fc07e0897d84e7)
+        ;
+
+        
+    
+    
+            var circle_marker_77989dad6eeafe0dbf59a326cb7a805d = L.circleMarker(
+                [-10.7818183, -36.0614567],
+                {"bubblingMouseEvents": true, "color": "#3388ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#3388ff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1, "stroke": true, "weight": 3}
+            ).addTo(map_5d94b849aee2bc717d0a852b248d54da);
+        
+    
+        var popup_21191d886988c8dde44d1e95833f3c64 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_aa02a5243c69980d7aa0d0b11036910c = $(`<div id="html_aa02a5243c69980d7aa0d0b11036910c" style="width: 100.0%; height: 100.0%;"><b>Timestamp:</b> 2019-12-16 02:19:00<br><b>VesselName:</b> CBO PARINTINS<br><b>MMSI</b>: 710002624<br><b>LAT:</b> -10.7818183<br><b>LON:</b> -36.0614567<br><b>SOG:</b> 0.0<br><b>Type:</b> Cargo<br><b>COG:</b> 299.0<br></div>`)[0];
+                popup_21191d886988c8dde44d1e95833f3c64.setContent(html_aa02a5243c69980d7aa0d0b11036910c);
+            
+        
+
+        circle_marker_77989dad6eeafe0dbf59a326cb7a805d.bindPopup(popup_21191d886988c8dde44d1e95833f3c64)
+        ;
+
+        
+    
+    
+            var circle_marker_db8d37678368f93078feb950b1b2ed2a = L.circleMarker(
+                [-10.75667, -36.05],
+                {"bubblingMouseEvents": true, "color": "#3388ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#3388ff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1, "stroke": true, "weight": 3}
+            ).addTo(map_5d94b849aee2bc717d0a852b248d54da);
+        
+    
+        var popup_664555ada903024276fe7138121c9aa3 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_41b94a25cdf510d96f9c6e5ed5ed9df4 = $(`<div id="html_41b94a25cdf510d96f9c6e5ed5ed9df4" style="width: 100.0%; height: 100.0%;"><b>Timestamp:</b> 2019-12-16 02:30:47<br><b>VesselName:</b> CBO PARINTINS<br><b>MMSI</b>: 710002624<br><b>LAT:</b> -10.75667<br><b>LON:</b> -36.05<br><b>SOG:</b> 0.0<br><b>Type:</b> Cargo<br><b>COG:</b> 299.0<br></div>`)[0];
+                popup_664555ada903024276fe7138121c9aa3.setContent(html_41b94a25cdf510d96f9c6e5ed5ed9df4);
+            
+        
+
+        circle_marker_db8d37678368f93078feb950b1b2ed2a.bindPopup(popup_664555ada903024276fe7138121c9aa3)
+        ;
+
+        
+    
+    
+            var circle_marker_6c014bd95006b131569b0e36a8f43881 = L.circleMarker(
+                [-10.7534517, -36.04887],
+                {"bubblingMouseEvents": true, "color": "#3388ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#3388ff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1, "stroke": true, "weight": 3}
+            ).addTo(map_5d94b849aee2bc717d0a852b248d54da);
+        
+    
+        var popup_a7d308348fa121da00fbae90fd05a87f = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_3e9103707c225f341309ff1a5d5d7f15 = $(`<div id="html_3e9103707c225f341309ff1a5d5d7f15" style="width: 100.0%; height: 100.0%;"><b>Timestamp:</b> 2019-12-16 02:32:33<br><b>VesselName:</b> CBO PARINTINS<br><b>MMSI</b>: 710002624<br><b>LAT:</b> -10.7534517<br><b>LON:</b> -36.04887<br><b>SOG:</b> 0.0<br><b>Type:</b> Cargo<br><b>COG:</b> 299.0<br></div>`)[0];
+                popup_a7d308348fa121da00fbae90fd05a87f.setContent(html_3e9103707c225f341309ff1a5d5d7f15);
+            
+        
+
+        circle_marker_6c014bd95006b131569b0e36a8f43881.bindPopup(popup_a7d308348fa121da00fbae90fd05a87f)
+        ;
+
+        
+    
+    
+            var circle_marker_54f9c818baa955c6437c04c9b34caf24 = L.circleMarker(
+                [-10.75, -36.04667],
+                {"bubblingMouseEvents": true, "color": "#3388ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#3388ff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1, "stroke": true, "weight": 3}
+            ).addTo(map_5d94b849aee2bc717d0a852b248d54da);
+        
+    
+        var popup_3c29aeb70d2ebd9f4f94142d040adbcd = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_529852cc395a699a548f1d5898d22004 = $(`<div id="html_529852cc395a699a548f1d5898d22004" style="width: 100.0%; height: 100.0%;"><b>Timestamp:</b> 2019-12-16 02:33:47<br><b>VesselName:</b> CBO PARINTINS<br><b>MMSI</b>: 710002624<br><b>LAT:</b> -10.75<br><b>LON:</b> -36.04667<br><b>SOG:</b> 0.0<br><b>Type:</b> Cargo<br><b>COG:</b> 299.0<br></div>`)[0];
+                popup_3c29aeb70d2ebd9f4f94142d040adbcd.setContent(html_529852cc395a699a548f1d5898d22004);
+            
+        
+
+        circle_marker_54f9c818baa955c6437c04c9b34caf24.bindPopup(popup_3c29aeb70d2ebd9f4f94142d040adbcd)
+        ;
+
+        
+    
+    
+            var poly_line_ca3b936f616369e934fc24d2c83b47f3 = L.polyline(
+                [[-11.01, -36.12667], [-10.9932, -36.1296183], [-10.8409483, -36.086805], [-10.7818183, -36.0614567], [-10.75667, -36.05], [-10.7534517, -36.04887], [-10.75, -36.04667]],
+                {"bubblingMouseEvents": true, "color": "#3388ff", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#3388ff", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 0.5}
+            ).addTo(map_5d94b849aee2bc717d0a852b248d54da);
+        
+    
+        var popup_16ede6fcaa3dea0b23ee8a387c3f5de4 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c497c90664ccb77c020f62d16be0d526 = $(`<div id="html_c497c90664ccb77c020f62d16be0d526" style="width: 100.0%; height: 100.0%;">710002624</div>`)[0];
+                popup_16ede6fcaa3dea0b23ee8a387c3f5de4.setContent(html_c497c90664ccb77c020f62d16be0d526);
+            
+        
+
+        poly_line_ca3b936f616369e934fc24d2c83b47f3.bindPopup(popup_16ede6fcaa3dea0b23ee8a387c3f5de4)
+        ;
+
+        
+    
+</script>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Classificação de Trajetórias</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+    <h1>Classifique a seguinte trajetória:</h1>
+    <div id="map" style="height: 400px;"></div>
+
+    <script>
+        var map = L.map('map').setView([{{ trajetoria_atual[0].coords[0] }}, {{ trajetoria_atual[0].coords[1] }}], 10);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var trajetoria = {{ trajetoria_atual | tojson }};
+        var latlngs = trajetoria.map(function(ponto) { return ponto.coords; });
+        var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
+
+        trajetoria.forEach(function(ponto) {
+            var marker = L.marker(ponto.coords).addTo(map);
+            marker.bindPopup(
+                "<b>Nome:</b> " + ponto.info.nome +
+                "<br><b>Direção:</b> " + ponto.info.direcao +
+                "<br><b>Velocidade:</b> " + ponto.info.velocidade
+            );
+            marker.openPopup(); // Abrir o popup imediatamente após adicionar o marcador
+        });
+
+        map.fitBounds(polyline.getBounds());
+    </script>
+
+    <form action="{{ url_for('classificar', trajetoria_id=trajetoria_id) }}" method="post">
+        <button type="submit" name="classificacao" value="like">Gostei</button>
+        <button type="submit" name="classificacao" value="dislike">Não Gostei</button>
+    </form>
+</body>
+</html>

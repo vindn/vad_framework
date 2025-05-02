@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Classificação de Trajetórias</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        /* Estilizar a tabela, as células e os cabeçalhos com bordas */
+        table {
+            border-collapse: collapse; /* Remove as bordas duplas entre células */
+            width: 100%; /* Opcional: define a largura da tabela */
+        }
+
+        th, td {
+            border: 1px solid black; /* Define a espessura e a cor da borda */
+            padding: 8px; /* Espaçamento interno nas células */
+            text-align: left; /* Alinhamento do texto nas células */
+        }
+        
+        th:first-child, td:first-child {
+            width: 20%;
+        }
+
+        th {
+            background-color: #f2f2f2; /* Cor de fundo para os cabeçalhos da tabela */
+        }
+    </style>    
+</head>
+<body>
+    <h1>Classifique a seguinte trajetória:</h1>
+    <div id="map" style="height: 400px;"></div>
+
+    <script>
+        var map = L.map('map').setView([{{ trajetoria_atual[0].coords[0] }}, {{ trajetoria_atual[0].coords[1] }}], 10);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var trajetoria = {{ trajetoria_atual | tojson }};
+        var latlngs = trajetoria.map(function(ponto) { return ponto.coords; });
+        var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
+
+        trajetoria.forEach(function(ponto) {
+            var marker = L.marker(ponto.coords).addTo(map);
+            marker.bindPopup(
+                "<b>Timestamp:</b> " + ponto.info.timestamp +        
+                "<br><b>MMSI:</b> " + ponto.info.mmsi +    
+                "<br><b>Nome:</b> " + ponto.info.nome +
+                "<br><b>Direção:</b> " + ponto.info.direcao + "º" +
+                "<br><b>Velocidade:</b> " + ponto.info.velocidade + " knots" 
+            );
+            marker.openPopup(); // Abrir o popup imediatamente após adicionar o marcador
+        });
+
+        map.fitBounds(polyline.getBounds());
+    </script>
+
+    <form action="{{ url_for('classificar', trajetoria_id=trajetoria_id) }}" method="post">
+        <button type="submit" name="classificacao" value="atividade_normal">Atividade Normal</button>
+        <button type="submit" name="classificacao" value="pesca_ilegal">Pesca Ilegal</button>
+        <button type="submit" name="classificacao" value="atividade_suspeita">Atividade Suspeita</button>
+        <button type="submit" name="classificacao" value="proximo">Próxima</button>
+        <button type="submit" name="classificacao" value="anterior">Anterior</button>
+    </form>
+    <BR>
+        <style>
+            .tabela-interna {
+                width: 200px; /* Garante que a tabela interna ocupe toda a largura da célula da tabela principal */
+            }
+            .tabela-interna td {
+                width: 50%; /* Cada célula da tabela interna ocupa metade da largura da tabela */
+            }
+        </style>        
+        <table style="font-size: 12px; width: 60%;">
+            <tr>
+                <th colspan="4">Informações sobre o Navio, Saída dos Modelos e das Regras do Especialista</th>
+            </tr>
+            <tr>
+                <!-- Primeira célula contendo duas colunas -->
+                <td valign="top">
+                    <table  style=" width: 300px;">
+                        <tr>
+                            <th>Inf. Navio</th>
+                            <th>Valores</th>
+                        </tr>                
+                        <tr>
+                            <td>TRAJ_ID</td>
+                            <td>{{traj_id}}</td>
+                        </tr>
+                        <tr>
+                            <td>NOME NAVIO</td>
+                            <td>{{nome_navio}}</td>
+                        </tr>
+                        <tr>
+                            <td>BANDEIRA</td>
+                            <td>{{bandeira}}</td>
+                        </tr>
+                        <tr>
+                            <td>TIPO NAVIO</td>
+                            <td>{{tipo_navio}}</td>
+                        </tr>
+                    </table>
+                </td>
+                <!-- Segunda célula contendo duas colunas -->
+                <td valign="top">
+                    <table style=" width: 300px;">
+                        <tr>
+                            <th>Comportamentos</th>
+                            <th>Valores</th>
+                        </tr>                
+                        <tr>
+                            <td>FISHING_TRAJECTORY</td>
+                            <td>{{ft}}%</td>
+                        </tr>
+                        <tr>
+                            <td>ENCOUNTER</td>
+                            <td>{{enc}}%</td>
+                        </tr>
+                        <tr>
+                            <td>LOITERING</td>
+                            <td>{{loi}}%</td>
+                        </tr>
+                        <tr>
+                            <td>SPOOFING</td>
+                            <td>{{spoofing}}%</td>
+                        </tr>
+                        <tr>
+                            <td>TRAJECTORY GAP</td>
+                            <td>{{gap}}%</td>
+                        </tr>
+                        <tr>
+                            <td>PASSAGEM DENTRO DE ZONA DE ATRACAGEM</td>
+                            <td>{{out_of_anchor_zone}}</td>
+                        </tr>
+                        <!-- Adicione mais linhas conforme necessário -->
+                    </table>
+                </td>
+                <td valign="top">
+                    <table  style="width: 400px;">
+                        <tr>
+                            <th>Regras do Especialista</th>
+                            <th>Valores</th>
+                        </tr>                
+                        <tr>
+                            <td>DIST. DA COSTA</td>
+                            <td>{{dist_costa}} milhas náuticas</td>
+                        </tr>
+                        <tr>
+                            <td>PASSAGEM DENTRO DE APA</td>
+                            <td>{{apa}}</td>
+                        </tr>
+                    </table>
+                </td>
+                <td colspan="3" valign="top">
+                    <table>
+                        <tr>
+                            <th>Predições</th>
+                            <th>Valores</th>
+                        </tr>                
+                        <tr>
+                            <td>PREDIÇÃO AL</td>
+                            <td>{{predicao}}</td>
+                        </tr>
+                        <tr>
+                            <td>PREDIÇÃO KM</td>
+                            <td>{{predicao_kmeans}}</td>
+                        </tr>
+                        <tr>
+                            <td>PREDIÇÃO DBSCAN</td>
+                            <td>{{predicao_dbscan}}</td>
+                        </tr>
+                        <tr>
+                            <td>CLASSIFICAÇÃO HUMANA</td>
+                            <td>{{classificacao}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+            </tr>            
+        </table>
+        
+        
+    Contagem: {{count_com_rotulos}} / {{count_total}}
+</body>
+</html>

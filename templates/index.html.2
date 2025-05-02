@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Classificação de Trajetórias</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        /* Estilizar a tabela, as células e os cabeçalhos com bordas */
+        table {
+            border-collapse: collapse; /* Remove as bordas duplas entre células */
+            width: 100%; /* Opcional: define a largura da tabela */
+        }
+
+        th, td {
+            border: 1px solid black; /* Define a espessura e a cor da borda */
+            padding: 8px; /* Espaçamento interno nas células */
+            text-align: left; /* Alinhamento do texto nas células */
+        }
+        
+        th:first-child, td:first-child {
+            width: 20%;
+        }
+
+        th {
+            background-color: #f2f2f2; /* Cor de fundo para os cabeçalhos da tabela */
+        }
+    </style>    
+</head>
+<body>
+    <h1>Classifique a seguinte trajetória:</h1>
+    <div id="map" style="height: 480px;"></div>
+
+    <script>
+        var map = L.map('map').setView([{{ trajetoria_atual[0].coords[0] }}, {{ trajetoria_atual[0].coords[1] }}], 10);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var trajetoria = {{ trajetoria_atual | tojson }};
+        var latlngs = trajetoria.map(function(ponto) { return ponto.coords; });
+        var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
+
+        trajetoria.forEach(function(ponto) {
+            var marker = L.marker(ponto.coords).addTo(map);
+            marker.bindPopup(
+                "<b>Timestamp:</b> " + ponto.info.timestamp +        
+                "<br><b>MMSI:</b> " + ponto.info.mmsi +    
+                "<br><b>Nome:</b> " + ponto.info.nome +
+                "<br><b>Direção:</b> " + ponto.info.direcao + "º" +
+                "<br><b>Velocidade:</b> " + ponto.info.velocidade + " knots" 
+            );
+            marker.openPopup(); // Abrir o popup imediatamente após adicionar o marcador
+        });
+
+        map.fitBounds(polyline.getBounds());
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var markers = [];
+            var polylines = [];
+            var distanceMarkers = [];
+            var mymap = map;
+
+            function calculateDistance(latlng1, latlng2) {
+                var R = 6371e3; // metres
+                var φ1 = latlng1.lat * Math.PI / 180; // φ, λ in radians
+                var φ2 = latlng2.lat * Math.PI / 180;
+                var Δφ = (latlng2.lat - latlng1.lat) * Math.PI / 180;
+                var Δλ = (latlng2.lng - latlng1.lng) * Math.PI / 180;
+
+                var a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+                        Math.cos(φ1) * Math.cos(φ2) *
+                        Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+                return R * c; // in metres
+            }
+
+            mymap.on('click', function(e) {
+                var newMarker = L.marker(e.latlng).addTo(mymap);
+                markers.push(newMarker);
+
+                if (markers.length % 2 === 0) { // Check if there is a pair of markers
+                    var lastIndex = markers.length - 1;
+                    var points = [markers[lastIndex - 1].getLatLng(), markers[lastIndex].getLatLng()];
+                    var polyline = L.polyline(points, {color: 'red', dashArray: '5, 5'}).addTo(mymap);
+                    polylines.push(polyline);
+
+                    var distance = calculateDistance(points[0], points[1]);
+                    var distanceMarker = L.marker([(points[0].lat + points[1].lat) / 2, (points[0].lng + points[1].lng) / 2], {
+                        icon: L.divIcon({
+                            className: 'distance-marker',
+                            html: `<div>${(distance / 1000).toFixed(2)} km</div>`,
+                            iconSize: [100, 40]
+                        })
+                    }).addTo(mymap);
+                    distanceMarkers.push(distanceMarker);
+                }
+            });
+
+            mymap.on('contextmenu', function(e) {
+                // Clear all markers, polylines, and distance markers
+                markers.forEach(marker => mymap.removeLayer(marker));
+                polylines.forEach(polyline => mymap.removeLayer(polyline));
+                distanceMarkers.forEach(distanceMarker => mymap.removeLayer(distanceMarker));
+                markers = [];
+                polylines = [];
+                distanceMarkers = [];
+                e.originalEvent.preventDefault(); // Prevent the browser context menu
+            });                    
+        });
+    </script>
+    
+    <style>
+        td.semBorda {
+          border: none; /* Ou usar border: 0; */
+        }
+      </style>
+
+    <form action="{{ url_for('classificar', meta_id=trajetoria_id) }}" method="post">
+        <table style="font-size: 14px; width: 30%;">
+            <tr>
+                <th colspan="4">Classifique o Tipo de Atividade como:</th>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" name="classificacao" value="atividade_normal">Normal</button>
+                </td>
+                <td>
+                    <button type="submit" name="classificacao" value="pesca_ilegal">Pesca Ilegal</button>
+                </td>
+                <td>
+                    <button type="submit" name="classificacao" value="atividade_suspeita">Suspeita</button>
+                </td>
+                <td>
+                    <button type="submit" name="classificacao" value="atividade_anomala">Anômala</button>
+                </td>
+                <td class="semBorda">
+                </td>
+                <td class="semBorda">
+                    <button type="submit" name="classificacao" value="proximo">Próxima</button>
+                </td>
+                <td class="semBorda">
+                    <button type="submit" name="classificacao" value="anterior">Anterior</button>
+                </td>
+                <td>
+                    Contagem: {{count_com_rotulos}} / {{count_total}}
+                </td>
+            </tr>
+        </table>
+    </form>
+    <BR>
+        <style>
+            .tabela-interna {
+                width: 200px; /* Garante que a tabela interna ocupe toda a largura da célula da tabela principal */
+            }
+            .tabela-interna td {
+                width: 50%; /* Cada célula da tabela interna ocupa metade da largura da tabela */
+            }
+        </style>        
+        <table style="font-size: 12px; width: 60%;">
+            <tr>
+                <th colspan="4">Informações sobre o Navio, Saída dos Modelos e das Regras do Especialista</th>
+            </tr>
+            <tr>
+                <!-- Primeira célula contendo duas colunas -->
+                <td valign="top">
+                    <table  style=" width: 300px;">
+                        <tr>
+                            <th>Inf. Navio</th>
+                            <th>Valores</th>
+                        </tr>                
+                        <tr>
+                            <td>META ID</td>
+                            <td>{{trajetoria_id}}</td>
+                        </tr>
+                        <tr>
+                            <td>TRAJ_ID</td>
+                            <td>{{traj_id}}</td>
+                        </tr>
+                        <tr>
+                            <td>NOME NAVIO</td>
+                            <td>{{nome_navio}}</td>
+                        </tr>
+                        <tr>
+                            <td>BANDEIRA</td>
+                            <td>{{bandeira}}</td>
+                        </tr>
+                        <tr>
+                            <td>TIPO NAVIO</td>
+                            <td>{{tipo_navio}}</td>
+                        </tr>
+                    </table>
+                </td>
+                <!-- Segunda célula contendo duas colunas -->
+                <td valign="top">
+                    <table style=" width: 300px;">
+                        <tr>
+                            <th>Comportamentos</th>
+                            <th>Valores</th>
+                        </tr>                
+                        <tr>
+                            <td>FISHING_TRAJECTORY</td>
+                            <td style="{{ 'color: red;' if ft > 50 else 'color: black;' }}">{{ft}}%</td>
+                        </tr>
+                        <tr>
+                            <td>ENCOUNTER</td>
+                            <td style="{{ 'color: red;' if enc == 'Sim' else 'color: black;' }}">
+                                {% if enc == 'Sim' %}
+                                  <a href="/encounter/{{ traj_fk }}" target="_blank" style="color: red;">{{ enc }}</a>
+                                {% else %}
+                                  {{ enc }}
+                                {% endif %}
+                              </td>
+                        </tr>
+                        <tr>
+                            <td>LOITERING</td>
+                            <td style="{{ 'color: red;' if loi == 'Sim' else 'color: black;' }}">{{loi}}%</td>
+                        </tr>
+                        <tr>
+                            <td>SPOOFING</td>
+                            <td style="{{ 'color: red;' if spoofing == 'Sim' else 'color: black;' }}">{{spoofing}}</td>
+                        </tr>
+                        <tr>
+                            <td>TRAJECTORY GAP</td>
+                            <td style="{{ 'color: red;' if gap == 'Sim' else 'color: black;' }}">
+                                {% if gap == 'Sim' %}
+                                  <a href="/gap/{{ mmsi }}/3" target="_blank" style="color: red;">{{ gap }}</a>
+                                {% else %}
+                                  {{ gap }}
+                                {% endif %}
+                              </td>
+                        </tr>
+                        <tr>
+                            <td>PASSAGEM DENTRO DE ZONA DE FUNDEIO</td>
+                            <td>{{out_of_anchor_zone}}</td>
+                        </tr>
+                        <!-- Adicione mais linhas conforme necessário -->
+                    </table>
+                </td>
+                <td valign="top">
+                    <table  style="width: 400px;">
+                        <tr>
+                            <th>Regras do Especialista</th>
+                            <th>Valores</th>
+                        </tr>                
+                        <tr>
+                            <td>DIST. DA COSTA</td>
+                            <td>{{dist_costa}} milhas náuticas</td>
+                        </tr>
+                        <tr>
+                            <td>PASSAGEM DENTRO DE APA</td>
+                            <td style="{{ 'color: red;' if apa == 'Sim' else 'color: black;' }}">{{apa}}</td>
+                        </tr>
+                        <tr>
+                            <td>PASSAGEM DENTRO DE ÁREA DE FPSO</td>
+                            <td style="{{ 'color: red;' if in_fpso_area == 'Sim' else 'color: black;' }}">{{in_fpso_area}}</td>
+                        </tr>
+                        <tr>
+                            <td>VELOCIDADE MÉDIA</td>
+                            <td>{{sog_mean}} nós</td>
+                        </tr>
+                    </table>
+                </td>
+                <td colspan="3" valign="top">
+                    <table>
+                        <tr>
+                            <th>Predições</th>
+                            <th>Valores</th>
+                        </tr>                
+                        <tr>
+                            <td>PREDIÇÃO AL</td>
+                            <td>{{predicao}}</td>
+                        </tr>
+                        <tr>
+                            <td>PREDIÇÃO KM</td>
+                            <td>{{predicao_kmeans}}</td>
+                        </tr>
+                        <tr>
+                            <td>PREDIÇÃO DBSCAN</td>
+                            <td>{{predicao_dbscan}}</td>
+                        </tr>
+                        <tr>
+                            <td>CLASSIFICAÇÃO HUMANA</td>
+                            <td>{{classificacao}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+            </tr>            
+        </table>
+        
+            
+</body>
+</html>

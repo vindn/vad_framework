@@ -1,0 +1,51 @@
+# Ignore compressed files
+*.z*
+*.zip
+
+# Large data files
+data/sintetic/gdf_sintetic.pkl
+data/sintetic/list_encounters_3meses.pickle
+data/sistram/gdf_*_*.pickle
+encounters.html
+data/sintetic/gdf_sintetic2.pkl
+data/sintetic/gdf_loitering_trajs.pkl
+data/gadm41_BRA.gpkg
+data/sintetic/dataset_fishing_train.csv
+metamodel.db
+data/train_behaviors/fishing_and_nofishing/dataset_fishing_train.csv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+.env
+.venv
+env/
+venv/
+ENV/
