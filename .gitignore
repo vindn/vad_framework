@@ -1,6 +1,5 @@
 # Ignore compressed files
-*.z*
-*.zip
+*.z[0-9]*
 
 # Large data files
 data/sintetic/gdf_sintetic.pkl
