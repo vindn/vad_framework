@@ -11,6 +11,14 @@ VAD (Vessel Activity Detection) Framework is a project developed to detect and a
 - Analysis of loitering behaviors
 - Detection of activities in restricted areas
 
+## References
+
+This code was based in following works:
+
+- do Nascimento, V.D.; Alves, T.A.O.; de Farias, C.M.; Dutra, D.L.C. A Hybrid Framework for Maritime Surveillance: Detecting Illegal Activities through Vessel Behaviors and Expert Rules Fusion. Sensors 2024, 24, 5623. https://doi.org/10.3390/s24175623
+
+
+
 ## Project Structure
 
 ```
