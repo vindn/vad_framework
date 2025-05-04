@@ -110,7 +110,11 @@ tar xzf file.tar.gz
 - `data/sintetic/gdf_sintetic.pkl`
 - `data/sintetic/list_encounters_3meses.pickle`
 - `data/sistram/gdf_*_*.pickle`
-- `metamodel.db`
+- `metamodel.db`: This is a SQLite database file that stores all preprocessed data. It includes:
+  - Preprocessed vessel trajectories
+  - Detected behaviors and encounters
+  - Analysis results
+  - Expert evaluations
 
 
 ## License
