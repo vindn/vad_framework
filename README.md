@@ -109,7 +109,7 @@ tar xzf file.tar.gz
 
 - `data/sintetic/gdf_sintetic.pkl`
 - `data/sintetic/list_encounters_3meses.pickle`
-- `data/sistram/gdf_*_*.pickle`
+- `data/sistram/gdf_*_*.pickle`: These files contain AIS (Automatic Identification System) data from the Brazilian coast, covering the period from January 2019 to December 2020. The data is stored in Python pickle format for efficient processing.
 - `metamodel.db`: This is a SQLite database file that stores all preprocessed data. It includes:
   - Preprocessed vessel trajectories
   - Detected behaviors and encounters
