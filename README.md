@@ -83,7 +83,15 @@ python main_jdl_stream.py
    - Visualization of vessel trajectories
    - Behavior classification options
 
-
+   c. Active Learning Interface:
+   ```bash
+   python ui_active_learning.py
+   ```
+   The Active Learning interface is used to train the framework through expert feedback. It provides:
+   - Model-suggested trajectories for expert evaluation
+   - Interactive interface for experts to assess and classify vessel behaviors
+   - Continuous model improvement through active learning
+   - Real-time feedback on model performance
 
 
 ## Large Files
