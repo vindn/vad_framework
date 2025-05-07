@@ -1,6 +1,13 @@
 # VAD Framework
 
-VAD (Vessel Activity Detection) Framework is a project developed to detect and analyze suspicious vessel activities using data fusion techniques and machine learning.
+VAD (Vessel Activity Detection) Framework is a project developed to detect and analyze suspicious vessel activities using data fusion techniques and machine learning. In this version it's possible detect 4 types of activities:
+
+- Illegal Fishing
+- Suspicious
+- Anoumalous
+- Normal
+
+
 
 ## Features
 
